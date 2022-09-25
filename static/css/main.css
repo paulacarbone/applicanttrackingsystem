@@ -1,0 +1,17 @@
+body {
+    background: #FC354C;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #860abf, #FC354C);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #860abf, #FC354C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.ppp{
+    width: 100%;
+} 
+.pp{
+    margin-top: 6%;
+}  
+.bor{
+  margin-top: 9%;
+}   
+.bord{
+  margin-top: 5%;
+}   

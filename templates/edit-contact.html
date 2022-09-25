@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-md-4 offset-md-4 pp">
+    <div class="card card-body">
+        <form action="/update/{{candidato.0}}" method="POST">
+            <div class="form-group">
+                <input type="text" name="nombrecandidato" placeholder="Nombre" class="form-control">               
+            </div>
+            <div class="form-group">
+                <input type="text" name="apellidocandidato" placeholder="Apellido" class="form-control">               
+            </div>
+            <div class="form-group">
+                <input type="text" name="telefono" placeholder="Telefono" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="mail" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="linkedin" placeholder="Linkedin" class="form-control">               
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success ppp">Save</button>
+
+            </div>
+        </form>    
+    </div>    
+</div>
+{% endblock %}
