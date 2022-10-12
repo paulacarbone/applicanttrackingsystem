@@ -69,12 +69,19 @@ def register():
             return render_template('login.html', msg = msg)
     return render_template('register.html', error = error)
 
-@app.route('/candidatos')
+@app.route('/index')
 def Index():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM candidatos')
     data = cur.fetchall()
     return render_template('index.html', candidatos = data)
+
+@app.route('/candidatos')
+def candidatos():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM candidatos')
+    data = cur.fetchall()
+    return render_template('candidatos.html', candidatos = data)
 
 @app.route('/add_contact', methods = ['POST'])    
 def add_contact():
@@ -133,4 +140,4 @@ def delete_contact(idcandidato):
 
 
 if(__name__=='__main__'):
-    app.run(port = 3007, debug = True) 
+    app.run(port = 3006, debug = True) 
