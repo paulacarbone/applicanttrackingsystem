@@ -38,8 +38,7 @@ def login():
     if session.get('loggedin') == True:
         return redirect(url_for('Index'))
     else:
-    return render_template('login.html', error = error)
-   
+        return render_template('login.html', error = error)
 
 @app.route('/logout')
 def logout():
@@ -76,23 +75,18 @@ def register():
 @app.route('/index')
 def Index():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM candidatos')
-    data = cur.fetchall()
-    return render_template('index.html', candidatos = data)
 
-@app.route('/candidatos')
-def candidatos():
-    cur = mysql.connection.cursor()
-    
     cur.execute('SELECT * FROM estados')
     estados = cur.fetchall()
     cur.execute('SELECT * FROM candidatos')
     candidatos = cur.fetchall()
-    return render_template('candidatos.html', candidatos = candidatos, estados = estados)
+    return render_template('index.html', candidatos = candidatos, estados = estados)
 
-@app.route('/add_contact', methods = ['POST'])    
+@app.route('/add-contact', methods = ['GET', 'POST'])    
 def add_contact():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return render_template('add-contact.html')
+    elif request.method == 'POST':
        nombrecandidato = request.form['nombrecandidato']
        apellidocandidato = request.form['apellidocandidato']
        telefono = request.form['telefono']  

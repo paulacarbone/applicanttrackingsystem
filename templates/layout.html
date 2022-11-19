@@ -19,13 +19,21 @@
           <a class="navbar-brand" href="/">Applicant Tracking System</a>          
         </div>
     </nav>
-    <div class="container"padding: 2rem 2rem;>
-
+    <div class="container">
+        {% with messagges = get_flashed_messages() %}
+            {% if messagges %} 
+                {% for message in messagges %}       
+                    <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% block body %}
         {% endblock %}
     </div>   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
-       
 </body>
 </html>

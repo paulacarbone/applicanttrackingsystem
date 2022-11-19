@@ -1,47 +1,48 @@
 {% extends 'layout.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}" />
+{% endblock %}
 <!-- al tener el extends trae el layout su footer y su body todo -->
 {% block body %}
 
-<div class="row">
-    <div class="col-md-5">
-            {% with messagges = get_flashed_messages() %}
-            {% if messagges %} 
-            {% for message in messagges %}       
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-        <div class="card card-body bor">
-            <form action="/add_contact" method="POST">
-                <div class="form-group">
-                    <input type="text" name="nombrecandidato" placeholder="Nombre" class="form-control">               
-                </div>
-                <div class="form-group">
-                    <input type="text" name="apellidocandidato" placeholder="Apellido" class="form-control">               
-                </div>
-                <div class="form-group">
-                    <input type="text" name="telefono" placeholder="Telefono" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="mail" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="linkedin" placeholder="Linkedin" class="form-control">               
-                </div>
-                <br>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block ppp">Guardar</button>
-                </div>  
-                <br>
-                <div class="form-group">
-                    <a href="candidatos" button type="submit" class="btn btn-primary btn-block ppp">Ver Candidatos</a>
-                </div>       
-            </form>   
-            </form>   
-        </div>
+<div class="bord">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/add-contact" class="btn btn-info btn-sm">Nuevo candidato</a>
     </div>
-    
-    {% endblock%}
+    <table class="table table-striped table-borderer table-light">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Linkedin</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for candidato in candidatos %}
+            <tr>
+                <!-- con el for se accede a los datos y con el indice los mostramos en los td -->
+                <td>{{candidato.1}}</td>
+                <td>{{candidato.2}}</td>
+                <td>{{candidato.3}}</td> 
+                <td>{{candidato.4}}</td> 
+                <td><a href="//{{candidato.5}}" target="_blank">{{candidato.5}}</a></td>
+                <td>{{estados[candidato.7-1][1]}}</td>
+                <td id="options">
+                    <!-- en la linea de abajo le paso el indice {{0}} para que sepa el id-->
+                    <a href="/edit/{{candidato.0}}" class="btn btn-info btn-sm">Modificar</a>
+                    <a href="/state/{{candidato.0}}" class="btn btn-success btn-sm">Estado</a>
+                    <a href="/delete/{{candidato.0}}" class="btn btn-secondary btn-delete btn-sm">Eliminar</a>
+                </td>           
+            </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock%}

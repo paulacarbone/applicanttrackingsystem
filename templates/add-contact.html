@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+<!-- al tener el extends trae el layout su footer y su body todo -->
+{% block body %}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card card-body bor">
+            <form action="/add-contact" method="POST">
+                <div class="form-group">
+                    <input type="text" name="nombrecandidato" placeholder="Nombre" class="form-control">               
+                </div>
+                <div class="form-group">
+                    <input type="text" name="apellidocandidato" placeholder="Apellido" class="form-control">               
+                </div>
+                <div class="form-group">
+                    <input type="text" name="telefono" placeholder="Telefono" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="mail" placeholder="Email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="linkedin" placeholder="Linkedin" class="form-control">               
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block ppp">Guardar</button>
+                </div>  
+                <br>
+                <div class="form-group">
+                    <a href="candidatos" button type="submit" class="btn btn-primary btn-block ppp">Ver Candidatos</a>
+                </div>       
+            </form>   
+            </form>   
+        </div>
+    </div>
+    
+    {% endblock%}
