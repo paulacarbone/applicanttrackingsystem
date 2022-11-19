@@ -79,9 +79,12 @@ def Index():
 @app.route('/candidatos')
 def candidatos():
     cur = mysql.connection.cursor()
+    
+    cur.execute('SELECT * FROM estados')
+    estados = cur.fetchall()
     cur.execute('SELECT * FROM candidatos')
-    data = cur.fetchall()
-    return render_template('candidatos.html', candidatos = data)
+    candidatos = cur.fetchall()
+    return render_template('candidatos.html', candidatos = candidatos, estados = estados)
 
 @app.route('/add_contact', methods = ['POST'])    
 def add_contact():
