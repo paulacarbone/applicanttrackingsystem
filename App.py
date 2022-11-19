@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -95,8 +95,13 @@ def add_contact():
        mail = request.form['mail']
        linkedin = request.form['linkedin']
        cur= mysql.connection.cursor()
-       cur.execute('INSERT INTO candidatos (nombrecandidato, apellidocandidato, telefono, mail, linkedin) VALUES(%s, %s, %s, %s, %s)',(nombrecandidato,apellidocandidato,telefono,mail,linkedin))
-    
+       estado_inicial = 1
+       cur.execute('INSERT INTO candidatos (nombrecandidato, apellidocandidato, telefono, mail, linkedin, idEstado) VALUES(%s, %s, %s, %s, %s, %s)',(nombrecandidato,apellidocandidato,telefono,mail,linkedin,estado_inicial))
+       # Guardar historial de estados
+       cur.execute("""
+            INSERT INTO candidatos_estados
+            VALUES (null, %s, LAST_INSERT_ID(), %s)
+            """, (datetime.now(), estado_inicial))
        mysql.connection.commit()
        flash('Candidato añadido exitosamente')
        return redirect(url_for('Index'))
@@ -117,9 +122,12 @@ def edit_contact_state(idcandidato):
         cur.execute('SELECT * FROM estados')
         estados = cur.fetchall()
 
+        cur.execute('SELECT * FROM candidatos_estados where idcandidato = %s', [idcandidato])
+        historial_estados = cur.fetchall()
+
         cur.execute('SELECT * FROM candidatos WHERE idcandidato = %s',[idcandidato])
         candidato = cur.fetchall()
-        return render_template('edit-contact-state.html', candidato = candidato[0], estados = estados)
+        return render_template('edit-contact-state.html', candidato = candidato[0], estados = estados, historial_estados = historial_estados)
     elif request.method == 'POST':
         estado = request.form['estado']
         cur = mysql.connection.cursor()
@@ -127,10 +135,15 @@ def edit_contact_state(idcandidato):
             UPDATE candidatos
             SET idestado = %s
             WHERE idcandidato = %s
-            """, (estado,idcandidato))
+            """, (estado, idcandidato))
+        # Guardar historial de estados
+        cur.execute("""
+            INSERT INTO candidatos_estados
+            VALUES (null, %s, %s, %s)
+            """, (datetime.now(), idcandidato, estado))
         mysql.connection.commit()
         flash('Candidato actualizado correctamente')
-        return redirect(url_for('Index')) 
+        return redirect(url_for('Index'))
 
 @app.route('/update/<idcandidato>', methods = ['POST'])    
 def update_contact(idcandidato):
