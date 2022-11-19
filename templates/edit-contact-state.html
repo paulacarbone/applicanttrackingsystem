@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-md-4 offset-md-4 pp">
+    <div class="card card-body">
+        <h5 class="card-title">{{candidato.1}} {{candidato.2}} ({{ estados[candidato.7 -1][1] }})</h5>
+        <form class="row g-3" action="/state/{{candidato.0}}" method="POST">
+            <div>
+                <label for="state" class="form-label">Nuevo estado</label>
+                <select id="state" name="estado" class="form-select">
+                    {% for estado in estados %}
+                    <option {{ 'selected' if candidato.7 == estado.0 }} value={{estado.0}}>{{estado.1}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success ppp">Save</button>
+            </div>
+        </form>    
+    </div>    
+</div>
+{% endblock %}

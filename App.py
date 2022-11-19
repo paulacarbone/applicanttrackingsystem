@@ -102,13 +102,35 @@ def add_contact():
        return redirect(url_for('Index'))
 
 @app.route('/edit/<idcandidato>')    
-def get_contact(idcandidato):
+def edit_contact(idcandidato):
     cur = mysql.connection.cursor() 
     cur.execute('SELECT * FROM candidatos WHERE idcandidato = %s',[idcandidato])
     data = cur.fetchall()
     print(data[0])
     return render_template('edit-contact.html', candidato = data[0])
 
+@app.route('/state/<idcandidato>', methods = ['GET', 'POST'])    
+def edit_contact_state(idcandidato):
+    if request.method == 'GET':
+        cur = mysql.connection.cursor() 
+
+        cur.execute('SELECT * FROM estados')
+        estados = cur.fetchall()
+
+        cur.execute('SELECT * FROM candidatos WHERE idcandidato = %s',[idcandidato])
+        candidato = cur.fetchall()
+        return render_template('edit-contact-state.html', candidato = candidato[0], estados = estados)
+    elif request.method == 'POST':
+        estado = request.form['estado']
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE candidatos
+            SET idestado = %s
+            WHERE idcandidato = %s
+            """, (estado,idcandidato))
+        mysql.connection.commit()
+        flash('Candidato actualizado correctamente')
+        return redirect(url_for('Index')) 
 
 @app.route('/update/<idcandidato>', methods = ['POST'])    
 def update_contact(idcandidato):
