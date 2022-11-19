@@ -34,6 +34,10 @@ def login():
             return redirect(url_for('Index'))       
         else:  
             error = '¡Usuario/contraseña Incorrecto!'
+
+    if session.get('loggedin') == True:
+        return redirect(url_for('Index'))
+    else:
     return render_template('login.html', error = error)
    
 
