@@ -4,6 +4,12 @@
 <div class="col-md-4 offset-md-4 pp">
     <div class="card card-body">
         <h5 class="card-title">{{candidato.1}} {{candidato.2}} ({{ estados[candidato.7 -1][1] }})</h5>
+        <h6>Historial</h6>
+        <ul>
+            {% for estado_candidato in historial_estados %}
+            <li><span class="fw-bold">{{estados[estado_candidato.3 -1][1]}}</span> <span class="fw-lighter">({{estado_candidato.1.strftime("%d/%m/%Y %H:%M:%S")}})</span></li>
+            {% endfor %}
+        </ul>
         <form class="row g-3" action="/state/{{candidato.0}}" method="POST">
             <div>
                 <label for="state" class="form-label">Nuevo estado</label>
@@ -14,7 +20,7 @@
                   </select>
             </div>
             <div>
-                <button type="submit" class="btn btn-success ppp">Save</button>
+                <button type="submit" class="btn btn-success ppp">Guardar</button>
             </div>
         </form>    
     </div>    
