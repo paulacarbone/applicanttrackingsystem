@@ -10,9 +10,8 @@ app.config['MYSQL_HOST']= 'localhost'
 app.config['MYSQL_USER']= 'root'
 app.config['MYSQL_PASSWORD']= ''
 app.config['MYSQL_DB']= 'atsbbdd'
+user = {}
 mysql = MySQL(app)
-
-
 app.secret_key = 'mysecretkey'
 
 
@@ -28,7 +27,7 @@ def login():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM usuarios WHERE usuario = %s AND password = %s', (usuario, password,))
         user = cursor.fetchone()
-
+       
         if user:
             session['loggedin'] = True
             return redirect(url_for('Index'))       
@@ -53,8 +52,9 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     error = ''
-   
-    if request.method == 'POST':
+    if len(user) == 0:
+        return redirect(url_for('login'))
+    elif request.method == 'POST':
         nombre = request.form['nombre']
         apellido = request.form['apellido']
         usuario = request.form['usuario']
@@ -74,8 +74,9 @@ def register():
 
 @app.route('/index')
 def Index():
+    if len(user) == 0:
+        return redirect(url_for('login'))
     cur = mysql.connection.cursor()
-
     cur.execute('SELECT * FROM estados')
     estados = cur.fetchall()
     cur.execute('SELECT * FROM candidatos')
@@ -84,6 +85,9 @@ def Index():
 
 @app.route('/add-contact', methods = ['GET', 'POST'])    
 def add_contact():
+    global user
+    if len(user) == 0:
+        return redirect(url_for('login'))
     if request.method == 'GET':
         return render_template('add-contact.html')
     elif request.method == 'POST':
@@ -106,6 +110,9 @@ def add_contact():
 
 @app.route('/edit/<idcandidato>')    
 def edit_contact(idcandidato):
+    global user
+    if len(user) == 0:
+        return redirect(url_for('login'))
     cur = mysql.connection.cursor() 
     cur.execute('SELECT * FROM candidatos WHERE idcandidato = %s',[idcandidato])
     data = cur.fetchall()
@@ -114,6 +121,9 @@ def edit_contact(idcandidato):
 
 @app.route('/state/<idcandidato>', methods = ['GET', 'POST'])    
 def edit_contact_state(idcandidato):
+    global user
+    if len(user) == 0:
+        return redirect(url_for('login'))
     if request.method == 'GET':
         cur = mysql.connection.cursor() 
 
@@ -145,6 +155,9 @@ def edit_contact_state(idcandidato):
 
 @app.route('/update/<idcandidato>', methods = ['POST'])    
 def update_contact(idcandidato):
+    global user
+    if len(user) == 0:
+        return redirect(url_for('login'))
     if request.method == 'POST':
        nombrecandidato = request.form['nombrecandidato']
        apellidocandidato = request.form['apellidocandidato']
@@ -168,6 +181,9 @@ def update_contact(idcandidato):
 
 @app.route('/delete/<string:idcandidato>')    
 def delete_contact(idcandidato):
+    global user
+    if len(user) == 0:
+        return redirect(url_for('login'))
     cur = mysql.connection.cursor()
     cur.execute('DELETE FROM candidatos WHERE idcandidato = {0}'.format(idcandidato))
     mysql.connection.commit()
