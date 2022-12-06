@@ -52,9 +52,8 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     error = ''
-    if len(user) == 0:
-        return redirect(url_for('login'))
-    elif request.method == 'POST':
+   
+    if request.method == 'POST':
         nombre = request.form['nombre']
         apellido = request.form['apellido']
         usuario = request.form['usuario']
