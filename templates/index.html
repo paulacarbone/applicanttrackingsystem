@@ -31,12 +31,14 @@
                 <td>{{candidato.3}}</td> 
                 <td>{{candidato.4}}</td> 
                 <td><a href="//{{candidato.5}}" target="_blank">{{candidato.5}}</a></td>
-                <td>{{estados[candidato.7-1][1]}}</td>
-                <td id="options">
-                    <!-- en la linea de abajo le paso el indice {{0}} para que sepa el id-->
-                    <a href="/edit/{{candidato.0}}" class="btn btn-info btn-sm">Modificar</a>
-                    <a href="/state/{{candidato.0}}" class="btn btn-success btn-sm">Estado</a>
-                    <a href="/delete/{{candidato.0}}" class="btn btn-secondary btn-delete btn-sm">Eliminar</a>
+                <td>{{estados[candidato.6-1][1]}}</td>
+                <td class="align-middle">
+                    <div id="options" >
+                        <!-- en la linea de abajo le paso el indice {{0}} para que sepa el id-->
+                        <a href="/edit/{{candidato.0}}" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="/state/{{candidato.0}}" class="btn btn-success btn-sm">Estado</a>
+                        <a href="/delete/{{candidato.0}}" class="btn btn-secondary btn-delete btn-sm">Eliminar</a>
+                    </div>
                 </td>           
             </tr>
             

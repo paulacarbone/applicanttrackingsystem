@@ -3,7 +3,7 @@
 {% block body %}
 <div class="col-md-4 offset-md-4 pp">
     <div class="card card-body">
-        <h5 class="card-title">{{candidato.1}} {{candidato.2}} ({{ estados[candidato.7 -1][1] }})</h5>
+        <h5 class="card-title">{{candidato.1}} {{candidato.2}} ({{ estados[candidato.6 -1][1] }})</h5>
         <h6>Historial</h6>
         <ul>
             {% for estado_candidato in historial_estados %}
@@ -15,7 +15,7 @@
                 <label for="state" class="form-label">Nuevo estado</label>
                 <select id="state" name="estado" class="form-select">
                     {% for estado in estados %}
-                    <option {{ 'selected' if candidato.7 == estado.0 }} value={{estado.0}}>{{estado.1}}</option>
+                    <option {{ 'selected' if candidato.6 == estado.0 }} value={{estado.0}}>{{estado.1}}</option>
                     {% endfor %}
                   </select>
             </div>
