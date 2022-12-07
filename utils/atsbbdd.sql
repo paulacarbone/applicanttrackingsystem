@@ -29,7 +29,6 @@ CREATE TABLE `candidatos` (
   `telefono` int DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
   `linkedin` varchar(45) DEFAULT NULL,
-  `rol` varchar(45) DEFAULT NULL,
   `idEstado` int NOT NULL,
   PRIMARY KEY (`idcandidato`),
   KEY `idestado_idx` (`idEstado`),
